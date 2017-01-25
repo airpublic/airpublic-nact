@@ -1,20 +1,20 @@
-<resourceInfos xmlns="http://fr.cea.sensinact/resource" 
+<resourceInfos xmlns="http://fr.cea.sensinact/resource"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://fr.cea.sensinact/resource ../../../schema/sensinact-resource.xsd"> 
+ xsi:schemaLocation="http://fr.cea.sensinact/resource ../../../schema/sensinact-resource.xsd">
   <resourceInfo xsi:type="resourceInfoSensor" name="SENSOR_EXAMPLE">
     <identifier xsi:type="binaryHexContent">01</identifier>
     <type>string</type>
   </resourceInfo>
-  <resourceInfo xsi:type="resourceInfoProperty" name="PROPERTY_EXAMPLE" policy="PROPERTY"> 
+  <resourceInfo xsi:type="resourceInfoProperty" name="PROPERTY_EXAMPLE" policy="PROPERTY">
     <identifier xsi:type="binaryHexContent">02</identifier>
     <type>string</type>
   </resourceInfo>
-  <resourceInfo xsi:type="resourceInfoVariable" name="STATE_VARIABLE_EXAMPLE" policy="STATE_VARIABLE"> 
+  <resourceInfo xsi:type="resourceInfoVariable" name="STATE_VARIABLE_EXAMPLE" policy="STATE_VARIABLE">
     <identifier xsi:type="binaryHexContent">03</identifier>
     <type>string</type>
   </resourceInfo>
-  <resourceInfo xsi:type="resourceInfoAction" name="ACTION_EXAMPLE" policy="ACTION"> 
-    <identifier xsi:type="binaryHexContent">04</identifier> 
+  <resourceInfo xsi:type="resourceInfoAction" name="ACTION_EXAMPLE" policy="ACTION">
+    <identifier xsi:type="binaryHexContent">04</identifier>
     <parameters method="ACT"></parameters>
   </resourceInfo>
 </resourceInfos>

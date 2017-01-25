@@ -5,12 +5,12 @@
  * Copyright (C) 2015 CEA
  * %%
  * sensiNact - 2015
- * 
+ *
  * CEA - Commissariat a l'energie atomique et aux energies alternatives
  * 17 rue des Martyrs
  * 38054 Grenoble
  * France
- * 
+ *
  * Copyright(c) CEA
  * All Rights Reserved
  * #L%
@@ -34,7 +34,7 @@ import fr.cea.sna.gateway.util.mediator.AbstractMediator;
  * Bundle Activator
  */
 public class Activator extends AbstractActivator<AbstractMediator>
-{		
+{
     /**
 	 * @inheritDoc
 	 *
@@ -42,8 +42,8 @@ public class Activator extends AbstractActivator<AbstractMediator>
 	 */
 	@Override
 	public void doStart() throws Exception
-	{    		
-		
+	{
+
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class Activator extends AbstractActivator<AbstractMediator>
 	@Override
 	public void doStop() throws Exception
 	{
-		
+
 	}
 
 	/**
@@ -72,5 +72,5 @@ public class Activator extends AbstractActivator<AbstractMediator>
 		{
 			public void doDeactivate(){};
 		};
-	}	
+	}
 }
