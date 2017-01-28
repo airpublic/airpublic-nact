@@ -1,6 +1,15 @@
 <resourceInfos xmlns="http://fr.cea.sensinact/resource"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://fr.cea.sensinact/resource ../../../schema/sensinact-resource.xsd">
+  <resourceInfo xsi:type="resourceInfoProperty" name="temperature" target="airQuality" modifiable="UPDATABLE">
+      <policy name="PROPERTY" update="AUTO" />
+    <identifier xsi:type="binaryHexContent">05</identifier>
+    <type>float</type>
+      <metadata name="Unit">
+          <type>string</type>
+          <value>Celsius</value>
+      </metadata>
+  </resourceInfo>
   <resourceInfo xsi:type="resourceInfoSensor" name="SENSOR_EXAMPLE">
     <identifier xsi:type="binaryHexContent">01</identifier>
     <type>string</type>
@@ -17,4 +26,9 @@
     <identifier xsi:type="binaryHexContent">04</identifier>
     <parameters method="ACT"></parameters>
   </resourceInfo>
+  <devices>
+    <device>
+      <service name="airQuality" />
+    </device>
+  </devices>
 </resourceInfos>

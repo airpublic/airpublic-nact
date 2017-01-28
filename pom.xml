@@ -23,7 +23,7 @@
 	              <Bundle-Description>${project.name}</Bundle-Description>
 	              <_nouses>true</_nouses>
 	              <_nodefaultversion>true</_nodefaultversion>
-	              <_snapshot>${maven.build.timestamp}</_snapshot>
+              <!--	              <_snapshot>${maven.build.timestamp}</_snapshot> -->
 	              <_exportcontents>!eu.airpublic.osgi</_exportcontents>
 	              <Bundle-Activator>eu.airpublic.osgi.Activator</Bundle-Activator>
 	            </instructions>
@@ -63,12 +63,23 @@
 		<version>1.2-SNAPSHOT</version>
 		<scope>provided</scope>
 	</dependency>
+	  <dependency>
+		  <groupId>fr.cea.sna.gateway.protocol</groupId>
+		  <artifactId>http</artifactId>
+		  <version>1.2-SNAPSHOT</version>
+		  <scope>provided</scope>
+	  </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.8.1</version>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>fr.cea.sna.gateway.sthbnd.http</groupId>
+          <artifactId>http-device</artifactId>
+          <version>1.2-SNAPSHOT</version>
+      </dependency>
   </dependencies>
 
 </project>
