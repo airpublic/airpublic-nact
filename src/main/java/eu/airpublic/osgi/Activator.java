@@ -18,6 +18,7 @@
 package eu.airpublic.osgi;
 
 import java.io.FileOutputStream;
+import java.util.Dictionary;
 
 import eu.airpublic.RawAirQualityProtocolStackConnector;
 import eu.airpublic.RawAirQualityReadingHttpRequestHandler;
@@ -28,12 +29,14 @@ import fr.cea.sna.gateway.generic.core.*;
 import fr.cea.sna.gateway.sthbnd.http.HttpPacket;
 import fr.cea.sna.gateway.sthbnd.http.HttpSnaProcessor;
 import fr.cea.sna.gateway.util.mediator.AbstractMediator;
+//import org.apache.felix.http.api.ExtHttpService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import fr.cea.sna.gateway.sthbnd.http.HttpSnaManager;
 
-
 import fr.cea.sna.gateway.util.mediator.AbstractActivator;
+import org.osgi.service.http.HttpContext;
+import org.osgi.service.http.NamespaceException;
 
 /**
  * Bundle Activator
@@ -55,6 +58,7 @@ public class Activator extends AbstractActivator<AbstractMediator>
 	public void doStart() throws Exception
 	{
         RawAirQualityProtocolStackConnector connector = new RawAirQualityProtocolStackConnector(mediator);
+
 
 		manager = new HttpSnaManager(super.mediator,  "resource.xml", null);
 		manager.setServiceType(SnaService.class);

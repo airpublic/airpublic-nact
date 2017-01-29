@@ -1,5 +1,7 @@
 package eu.airpublic;
 
+// This file is copypasta'd from fr.cea.sna
+
 import com.sun.net.httpserver.*;
 import fr.cea.sna.gateway.generic.core.SnaProcessor;
 import fr.cea.sna.gateway.protocol.http.server.HttpContent;

@@ -3,6 +3,7 @@ package eu.airpublic;
 import fr.cea.sna.gateway.core.model.ResourceConfig;
 import fr.cea.sna.gateway.generic.core.ProtocolStackConnector;
 import fr.cea.sna.gateway.generic.core.Task;
+import fr.cea.sna.gateway.generic.core.Transmitter;
 import fr.cea.sna.gateway.generic.core.packet.Packet;
 import fr.cea.sna.gateway.generic.local.ServicesEnumeration;
 import fr.cea.sna.gateway.sthbnd.http.HttpProtocolStackConnector;
@@ -44,20 +45,21 @@ public class RawAirQualityProtocolStackConnector extends HttpProtocolStackConnec
         return null;
     }
 
-//    class ServicesEnumerationTask extends JSONHttpChainedTask<HttpRequest> {
-//
-//    }
+    class AirpublicServicesEnumerationTask extends ServicesEnumeration {
 
-    public Task.ServicesEnumeration createServicesEnumerationTask(AbstractMediator abstractMediator, String s, Object[] objects) {
-//        return new JSONHttpChainedTask<HttpRequest>(mediator, HttpRequest.class, null, null) {
-//
-//        };
-//        return new ServicesEnumeration(this.mediator, this, null, new Object[0]) {
-//            public void execute() {
-//                super.execute();
-//                this.result = new String[]{"airQuality"};
-//            }
-//        };
-        return null;
+        String services[] = null;
+
+        public AirpublicServicesEnumerationTask(AbstractMediator mediator, Transmitter transmitter, String processorId, Object[] parameters) {
+            super(mediator, transmitter, processorId, parameters);
+            services = new String[]{"airQuality", "airpublicUncalibrated"};
+        }
+
+        public void execute() {
+            this.setResult(services);
+        }
+    }
+
+    public Task.ServicesEnumeration createServicesEnumerationTask(AbstractMediator mediator, String path, Object[] parameters) {
+        return new AirpublicServicesEnumerationTask(mediator, this, path, parameters);
     }
 }

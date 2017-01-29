@@ -1,34 +1,140 @@
 <resourceInfos xmlns="http://fr.cea.sensinact/resource"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://fr.cea.sensinact/resource ../../../schema/sensinact-resource.xsd">
-  <resourceInfo xsi:type="resourceInfoProperty" name="temperature" target="airQuality" modifiable="UPDATABLE">
+    <resourceInfo xsi:type="resourceInfoProperty" name="LOCATION" target="admin" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">location</identifier>
+        <type>string</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="altitude" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">altitude</identifier>
+        <type>float</type>
+        <metadata name="Unit">
+            <type>string</type>
+            <value>Metres</value>
+        </metadata>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="co_a" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">co_a</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="co_w" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">co_w</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="no2_a" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">no2_a</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="no2_w" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">no2_w</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="pt" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">pt</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="gps_fix" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">gps_fix</identifier>
+        <type>boolean</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="heading" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">heading</identifier>
+        <type>float</type>
+        <metadata name="Unit">
+            <type>string</type>
+            <value>Degrees</value>
+        </metadata>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="humidity" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">humidity</identifier>
+        <type>float</type>
+        <metadata name="Unit">
+            <type>string</type>
+            <value>% relative</value>
+        </metadata>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="lonet_bat" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">lonet_bat</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="pm1" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">pm1</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="pm10" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">pm10</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="pm2_5" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">pm2_5</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="w_pm1" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">w_pm1</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="w_pm10" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">w_pm10</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="w_pm2_5" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">w_pm2_5</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="sample_flow_rate" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">sample_flow_rate</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="sampling_period" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">sampling_period</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="speed" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">speed</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="date" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">date</identifier>
+        <type>float</type>
+    </resourceInfo>
+  <resourceInfo xsi:type="resourceInfoProperty" name="temp" target="airpublicUncalibrated" modifiable="UPDATABLE">
       <policy name="PROPERTY" update="AUTO" />
-    <identifier xsi:type="binaryHexContent">05</identifier>
+    <identifier xsi:type="stringContent">temp</identifier>
     <type>float</type>
-      <metadata name="Unit">
-          <type>string</type>
-          <value>Celsius</value>
-      </metadata>
+    <metadata name="Unit">
+        <type>string</type>
+        <value>Celsius</value>
+    </metadata>
   </resourceInfo>
-  <resourceInfo xsi:type="resourceInfoSensor" name="SENSOR_EXAMPLE">
-    <identifier xsi:type="binaryHexContent">01</identifier>
-    <type>string</type>
+  <resourceInfo xsi:type="resourceInfoProperty" name="retries" target="airpublicUncalibrated" modifiable="UPDATABLE">
+      <policy name="PROPERTY" update="AUTO" />
+      <identifier xsi:type="stringContent">retries</identifier>
+      <type>integer</type>
   </resourceInfo>
-  <resourceInfo xsi:type="resourceInfoProperty" name="PROPERTY_EXAMPLE" policy="PROPERTY">
-    <identifier xsi:type="binaryHexContent">02</identifier>
-    <type>string</type>
+  <resourceInfo xsi:type="resourceInfoProperty" name="id" target="airpublicUncalibrated" modifiable="UPDATABLE">
+      <policy name="PROPERTY" update="AUTO" />
+      <identifier xsi:type="stringContent">id</identifier>
+      <type>boolean</type>
   </resourceInfo>
-  <resourceInfo xsi:type="resourceInfoVariable" name="STATE_VARIABLE_EXAMPLE" policy="STATE_VARIABLE">
-    <identifier xsi:type="binaryHexContent">03</identifier>
-    <type>string</type>
-  </resourceInfo>
-  <resourceInfo xsi:type="resourceInfoAction" name="ACTION_EXAMPLE" policy="ACTION">
-    <identifier xsi:type="binaryHexContent">04</identifier>
-    <parameters method="ACT"></parameters>
-  </resourceInfo>
-  <devices>
-    <device>
-      <service name="airQuality" />
-    </device>
-  </devices>
 </resourceInfos>

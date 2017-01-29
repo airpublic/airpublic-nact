@@ -12,23 +12,24 @@ public class RawAirQualityReadingPacket extends HttpRequestPacket implements Htt
         super(content);
     }
 
-    public byte[] getContent() {
-        return new byte[0];
-    }
-
     public void setContent(byte[] bytes) {
-        int length = content==null?0:content.length;
+        System.out.println("Setting content to "+bytes.toString());
+        int length = bytes==null?0:bytes.length;
 
         this.content = new byte[length];
 
         if(length > 0)
         {
-            System.arraycopy(content, 0, this.content, 0, length);
+            System.arraycopy(bytes, 0, this.content, 0, length);
         }
+
+        System.out.println("Content is now "+this.content.toString());
 
     }
 
-    public byte[] getcontent() {
+    public byte[] getContent() {
+        System.out.println("Getting content as "+this.content.toString());
+
         int length = content==null?0:content.length;
 
         byte[] content = new byte[length];
