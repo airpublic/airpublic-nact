@@ -1,19 +1,19 @@
 package eu.airpublic;
 
-import fr.cea.sna.gateway.generic.core.InvalidPacketException;
-import fr.cea.sna.gateway.generic.core.packet.Packet;
-import fr.cea.sna.gateway.generic.core.packet.SimplePacketReader;
-import fr.cea.sna.gateway.util.mediator.AbstractMediator;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.cea.sna.gateway.generic.core.InvalidPacketException;
+import fr.cea.sna.gateway.generic.core.packet.SimplePacketReader;
+import fr.cea.sna.gateway.sthbnd.http.HttpPacket;
+import fr.cea.sna.gateway.util.mediator.AbstractMediator;
+
 /**
  * Created by john on 25/01/17.
  */
-public class RawAirQualityReadingPacketReader extends SimplePacketReader{
+public class RawAirQualityReadingPacketReader extends SimplePacketReader<HttpPacket>{
 
     protected RawAirQualityReadingPacketReader(AbstractMediator mediator) {
         super(mediator);
@@ -46,7 +46,7 @@ public class RawAirQualityReadingPacketReader extends SimplePacketReader{
 
             attrs.put(name, value);
 
-            this.mediator.warn("pair: " + name + ": " + value);
+            //this.mediator.warn("pair: " + name + ": " + value);
         }
 
         return attrs;
@@ -69,10 +69,6 @@ public class RawAirQualityReadingPacketReader extends SimplePacketReader{
 
         String spid = "airpublic_"+sensorId;
         super.setServiceProviderId(spid);
-        super.isHelloMessage(true);
-        super.setServiceId("admin");
-//        super.setResourceId("id");
-//        super.setData(sensorId);
         super.configure();
 
         return spid;
@@ -89,7 +85,7 @@ public class RawAirQualityReadingPacketReader extends SimplePacketReader{
         String gpsFixStr = attrs.get("gps_fix");
         boolean gpsFix = false;
 
-        System.out.println("gps_fix "+gpsFixStr);
+        //System.out.println("gps_fix "+gpsFixStr);
 
         if (gpsFixStr != null) {
             gpsFix = (Integer.parseInt(gpsFixStr) != 0);
@@ -107,31 +103,34 @@ public class RawAirQualityReadingPacketReader extends SimplePacketReader{
             float lat = Float.parseFloat(latStr);
 
             String location = String.format("%f:%f", lat, lon);
-            System.out.println("SET location "+location);
+            //System.out.println("SET location "+location);
 
             super.setData(location);
             super.configure();
 
         } else {
-            System.out.println("SET location null");
+            //System.out.println("SET location null");
 
             super.setData(null);
             super.configure();
         }
     }
 
-    public void parse(Packet packet) throws InvalidPacketException {
+    public void parse(HttpPacket packet) throws InvalidPacketException {
 
-        Map<String, String> attrs = parseFormEncodedData(new String(packet.getBytes()));
+        Map<String, String> attrs = parseFormEncodedData(
+        		new String(packet.getBytes()));
         try {
-            String content = new String(packet.getBytes());
+              //String content = new String(packet.getBytes());
 
-            this.mediator.warn("Content Follows:");
-            this.mediator.warn(content);
+//            this.mediator.warn("Content Follows:");
+//            this.mediator.warn(content);
+//            this.mediator.warn("Parsing air quality packet");
 
-            this.mediator.warn("Parsing air quality packet");
-
-            String floatKeys[] = {"pm1", "pm2_5", "pm10", "w_pm1", "w_pm10", "w_pm2_5", "sample_flow_rate", "sampling_period", "speed", "altitude", "heading", "humidity", "temp", "no2_a", "no2_w", "co_a", "co_w", "pt", "latitude", "longitude"};
+            String floatKeys[] = {"pm1", "pm2_5", "pm10", "w_pm1", 
+            		"w_pm10", "w_pm2_5", "sample_flow_rate", "sampling_period", 
+            		"speed", "altitude", "heading", "humidity", "temp", "no2_a", 
+            		"no2_w", "co_a", "co_w", "pt", "latitude", "longitude"};
             String intKeys[] = {"lonet_bat", "id"};
 
             // Get sensor id
@@ -165,11 +164,8 @@ public class RawAirQualityReadingPacketReader extends SimplePacketReader{
                 super.setServiceProviderId(spid);
                 super.setServiceId(sid);
                 super.setResourceId(s);
-
                 int value = Integer.parseInt(svalue);
-
                 super.setData(value);
-
                 super.configure();
             }
         }
@@ -187,7 +183,7 @@ public class RawAirQualityReadingPacketReader extends SimplePacketReader{
                 float value = Float.parseFloat(svalue);
                 super.setData(value);
                 
-                System.out.println(String.format("Setting %s:%s:%s:%f", spid, sid, s, value));
+                //System.out.println(String.format("Setting %s:%s:%s:%s", spid, sid, s, svalue));
 
                 super.configure();
             }

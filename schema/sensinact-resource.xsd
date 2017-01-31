@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-xmlns:sensinact="http://fr.cea.sensinact/resource"
-targetNamespace="http://fr.cea.sensinact/resource"
+xmlns:sensinact="http://fr.cea.sensinact/resource" 
+targetNamespace="http://fr.cea.sensinact/resource" 
 elementFormDefault="qualified" attributeFormDefault="unqualified">
-
+	
      <simpleType name="reference_parameter_enum">
-		<restriction base="string">
+		<restriction base="string">		
 			<enumeration value="EMPTY"/>
 			<enumeration value="PARAMETERS"/>
 			<enumeration value="INTERMEDIATE"/>
 			<enumeration value="RESPONSE"/>
 		</restriction>
 	</simpleType>
-
+	
 	<simpleType name="update_enum">
 		<restriction base="string">
 			<enumeration value="INIT"/>
@@ -20,7 +20,15 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			<enumeration value="NONE"/>
 		</restriction>
 	</simpleType>
-
+	
+	<simpleType name="modifiable_enum">
+		<restriction base="string">
+			<enumeration value="MODIFIABLE"/>
+			<enumeration value="UPDATABLE"/>
+			<enumeration value="FIXED"/>
+		</restriction>
+	</simpleType>
+	
 	<simpleType name="method_enum">
 		<restriction base="string">
 			<enumeration value="GET"/>
@@ -29,7 +37,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			<enumeration value="UNSUBSCRIBE"/>
 		</restriction>
 	</simpleType>
-
+	
 	<simpleType name="extended_method_enum">
 		<restriction base="string">
 			<enumeration value="GET"/>
@@ -39,7 +47,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			<enumeration value="UNSUBSCRIBE"/>
 		</restriction>
 	</simpleType>
-
+	
 	<simpleType name="type_enum">
 		<restriction base="string">
 			<enumeration value="GET"/>
@@ -52,7 +60,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			<enumeration value="SERVICES_ENUMERATION"/>
 		</restriction>
 	</simpleType>
-
+	
 	<simpleType name="policy_enum">
 		<restriction base="string">
 			<enumeration value="STATE_VARIABLE"/>
@@ -61,14 +69,16 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			<enumeration value="ACTION"/>
 		</restriction>
 	</simpleType>
-
+	
+	<!--
 	<simpleType name="scope_enum">
 		<restriction base="string">
 			<enumeration value="DEVICE"/>
 			<enumeration value="SERVICE"/>
 		</restriction>
 	</simpleType>
-
+	-->
+	
 	<simpleType name="subscribe_enum">
 		<restriction base="string">
 			<enumeration value="ON_CHANGE"/>
@@ -78,13 +88,13 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			<enumeration value="TIMED_OUT"/>
 		</restriction>
 	</simpleType>
-
+        
 	<complexType name="policies">
 		<sequence>
 			<element name="policy" type="sensinact:policy" minOccurs="0" maxOccurs="4"/>
 		</sequence>
-	</complexType>
-
+	</complexType>	  
+	
 	<complexType name="policy">
 		<sequence>
 			<element name="classname" minOccurs="0" maxOccurs="1" type="QName"/>
@@ -93,13 +103,13 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 		<attribute name="name" type="sensinact:policy_enum" use="required"/>
 		<attribute name="update" type="sensinact:update_enum" use="optional" default="NONE"/>
 	</complexType>
-
+	
 	<complexType name="simpleContent" abstract="true">
 		<simpleContent>
 			<extension base="anySimpleType"/>
 		</simpleContent>
 	</complexType>
-
+	
 	<complexType name="binaryHexContent" abstract="false">
 		<simpleContent>
 			<restriction base="sensinact:simpleContent">
@@ -111,7 +121,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</restriction>
 		</simpleContent>
 	</complexType>
-
+	
 	<complexType name="stringContent" abstract="false">
 		<simpleContent>
 			<restriction base="sensinact:simpleContent">
@@ -123,7 +133,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</restriction>
 		</simpleContent>
 	</complexType>
-
+	
 	<complexType name="valueType">
 		<simpleContent>
 			<extension base="sensinact:simpleContent">
@@ -131,13 +141,13 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</simpleContent>
 	</complexType>
-
+	
 	<complexType name="restrictedValueType">
 		<simpleContent>
 			<extension base="sensinact:simpleContent"/>
 		</simpleContent>
 	</complexType>
-
+	
 	<complexType name="typeType">
 		<simpleContent>
 			<extension base="QName">
@@ -145,19 +155,19 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</simpleContent>
 	</complexType>
-
+	
 	<complexType name="restrictedTypeType">
 		<simpleContent>
 			<extension base="QName"/>
 		</simpleContent>
 	</complexType>
-
+	
 	<complexType name="nameTypeValue" abstract="true"/>
-
+	
 	<complexType name="constraint">
 		<attribute name="value" type="anySimpleType" use="required"/>
 	</complexType>
-
+	
 	<complexType name="constraintOnNumeric">
 		<complexContent>
 			<restriction base="sensinact:constraint">
@@ -165,7 +175,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</restriction>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="constraintOnString">
 		<complexContent>
 			<restriction base="sensinact:constraint">
@@ -173,7 +183,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</restriction>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="abstractConstraintOnReference" abstract="true">
 		<complexContent>
 			<restriction base="sensinact:constraint">
@@ -181,7 +191,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</restriction>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="constraintOnReference">
 		<complexContent>
 			<extension base="sensinact:abstractConstraintOnReference">
@@ -189,7 +199,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="constraints">
 		<sequence>
 			<choice minOccurs="1" maxOccurs="unbounded">
@@ -205,10 +215,10 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 				<element id="pattern" name="pattern" type="sensinact:constraintOnString"/>
 				<element id="delta" name="delta" type="sensinact:constraintOnReference"/>
 				<element id="absolute" name="absolute" type="sensinact:constraintOnReference"/>
-			</choice>
+			</choice>	
 		</sequence>
 	</complexType>
-
+	
 	<complexType name="parameter" >
 		<complexContent>
 			<extension base="sensinact:nameTypeValue">
@@ -223,14 +233,14 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="parameters" abstract="true">
 		<sequence>
 			<element name="parameter" type="sensinact:parameter" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="references" type="sensinact:references" minOccurs="0" maxOccurs="1"/>
 		</sequence>
-	</complexType>
-
+	</complexType>	
+	
 	<complexType name="dataResourceParameters">
 		<complexContent>
 			<extension base="sensinact:parameters">
@@ -238,7 +248,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="actionResourceParameters">
 		<complexContent>
 			<extension base="sensinact:parameters">
@@ -246,7 +256,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="conditionalConstant" >
 		<sequence>
 			<element name="type" type="sensinact:restrictedTypeType" minOccurs="1" maxOccurs="1"/>
@@ -254,7 +264,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			<element name="contraints" type="sensinact:constraints" minOccurs="0" maxOccurs="1"/>
 		</sequence>
 	</complexType>
-
+	
 	<complexType name="conditionalConstantFixed" >
 		<complexContent>
 			<restriction base="sensinact:conditionalConstant">
@@ -266,7 +276,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</restriction>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="reference" abstract="true">
 		<complexContent>
 			<extension base="sensinact:nameTypeValue">
@@ -276,7 +286,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 		   </extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="copyReference" >
 		<complexContent>
 			<extension base="sensinact:reference">
@@ -284,7 +294,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="conditionalReference" >
 		<complexContent>
 			<extension base="sensinact:reference">
@@ -295,7 +305,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+		
 	<complexType name="constantReference" >
 		<complexContent>
 			<extension base="sensinact:reference">
@@ -305,7 +315,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="calculatedReference" >
 		<complexContent>
 			<extension base="sensinact:reference">
@@ -319,13 +329,13 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="references" >
 		<sequence>
 			<element name="reference" type="sensinact:reference" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 	</complexType>
-
+	
 	<complexType name="builder" abstract="true">
 		<complexContent>
 			<extension base="sensinact:nameTypeValue">
@@ -334,13 +344,13 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 		   </extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="copyBuilder">
 		<complexContent>
 			<extension base="sensinact:builder"/>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="conditionalBuilder" >
 		<complexContent>
 			<extension base="sensinact:builder">
@@ -350,7 +360,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="calculatedBuilder" >
 		<complexContent>
 			<extension base="sensinact:builder">
@@ -363,13 +373,13 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<simpleType name="nameTypeValueKeyWordsExcludedString">
 		<restriction base="string">
 			<pattern value="([^ntv]|n[^a]|t[^y]|v[^a]|na[^m]|ty[^p]|va[^l]|nam[^e]|typ[^e]|val[^u]|name[a-z0-9]|type[a-z0-9]|valu[^e]|value[a-z0-9])[a-z0-9_\-]*"/>
 		</restriction>
 	</simpleType>
-
+	
 	<simpleType name="modifiableHiddenKeyWordsExcludedString">
 		<restriction base="string">
 			<pattern value="([^m]|[^h]|m[^o]|h[^i]|mo[^d]|hi[^d]|mod[^i]|hid[^d]|modi[^f]|hidd[^e]|modif[^i]|hidde[^n]|modifi[^a]|hidden[a-z0-9]|modifia[^b]|modifiab[^l]|modifiabl[^e]|modifiable[a-z0-9])[a-z0-9_\-]*"/>
@@ -381,7 +391,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			<pattern value="[^,\s]+(,[^,\s]+)*"/>
 		</restriction>
 	</simpleType>
-
+	
 	<complexType name="metadata">
 		<complexContent>
 			<extension base="sensinact:nameTypeValue">
@@ -393,7 +403,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="attribute">
 		<complexContent>
 			<extension base="sensinact:nameTypeValue">
@@ -409,36 +419,36 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 					<element name="constraints" type="sensinact:constraints" minOccurs="0" maxOccurs="1"/>
 				</sequence>
 				<attribute name="name" use="required" type="sensinact:nameTypeValueKeyWordsExcludedString"/>
-				<attribute name="modifiable" type="boolean" default="true" use="optional"/>
+				<attribute name="modifiable" type="sensinact:modifiable_enum" use="optional"/>
 				<attribute name="hidden" type="boolean" default="false" use="optional"/>
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="command">
-		<sequence maxOccurs="1" minOccurs="1">
-			<element name="identifier" type="sensinact:simpleContent" minOccurs="1" maxOccurs="1"/>
+		<sequence maxOccurs="1" minOccurs="1">	
+			<element name="identifier" type="sensinact:simpleContent" minOccurs="1" maxOccurs="1"/>	 
 		</sequence>
 		<attribute name="type" type="sensinact:type_enum" use="required"/>
-	</complexType>
-
+	</complexType>	
+	
 	<complexType name="commands">
-		<sequence maxOccurs="1" minOccurs="1">
-			<element name="command" type="sensinact:command" minOccurs="0" maxOccurs="8"/>
-		</sequence>
+		<sequence maxOccurs="1" minOccurs="1">	
+			<element name="command" type="sensinact:command" minOccurs="0" maxOccurs="8"/>	 
+		</sequence>	
 	</complexType>
-
+	
 	<complexType name="subscriptionModes">
-		<sequence maxOccurs="1" minOccurs="1">
-			<element name="subscriptionMode" type="sensinact:subscribe_enum" minOccurs="1" maxOccurs="unbounded"/>
+		<sequence maxOccurs="1" minOccurs="1">			
+			<element name="subscriptionMode" type="sensinact:subscribe_enum" minOccurs="1" maxOccurs="unbounded"/>	
 		</sequence>
 	</complexType>
-
+	
 	<complexType name="resourceInfo" abstract="true">
-		<sequence maxOccurs="1" minOccurs="1">
+		<sequence maxOccurs="1" minOccurs="1">	
 			<element name="policy" type="sensinact:policy" minOccurs="0" maxOccurs="1"/>
 			<element name="subscriptionModes" type="sensinact:subscriptionModes" minOccurs="0" maxOccurs="1"/>
-			<element name="identifier" type="sensinact:simpleContent" minOccurs="1" maxOccurs="1"/>
+			<element name="identifier" type="sensinact:simpleContent" minOccurs="1" maxOccurs="1"/>	 
 			<element name="attribute" type="sensinact:attribute" minOccurs="0" maxOccurs="unbounded">
 				<unique name="uniqueAttributeTypeTarget">
 					<selector xpath="./sensinact:type"/>
@@ -448,17 +458,16 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 					<selector xpath="./sensinact:value"/>
 					<field xpath="@target"/>
 				</unique>
-			</element>
-		</sequence>
+			</element>		
+		</sequence>	
 		<attribute name="name" type="string" use="required"/>
-		<attribute name="scope" type="sensinact:scope_enum" use="required"/>
 		<attribute name="target" type="sensinact:targets" use="optional"/>
 		<attribute name="profile" type="sensinact:targets" use="optional"/>
 	</complexType>
-
+	
 	<complexType name="resourceInfoData" abstract="true">
 		<complexContent>
-			<extension base="sensinact:resourceInfo">
+			<extension base="sensinact:resourceInfo">			
 				<sequence>
 					<element name="type" type="sensinact:typeType" minOccurs="1" maxOccurs="unbounded">
 						<annotation>
@@ -469,7 +478,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 						<annotation>
 							<documentation>Value of the associated Resource's 'value' attribute </documentation>
 						</annotation>
-					</element>
+					</element>	
 					<element name="metadata" type="sensinact:metadata" minOccurs="0" maxOccurs="unbounded">
 						<annotation>
 							<documentation>Metadata of the associated Resource's 'value' attribute</documentation>
@@ -478,21 +487,21 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 							<selector xpath="./sensinact:value"/>
 							<field xpath="@target"/>
 						</unique>
-					</element>
-					<element name="constraints" type="sensinact:constraints" minOccurs="0" maxOccurs="1"/>
+					</element>					
+					<element name="constraints" type="sensinact:constraints" minOccurs="0" maxOccurs="1"/>	
 					<element name="parameters" type="sensinact:dataResourceParameters" minOccurs="0" maxOccurs="unbounded">
 						<key name="uniqueDataParameterName">
 							<selector xpath="./sensinact:parameter"/>
 							<field xpath="@name"/>
 						</key>
-					</element>
+					</element>		
 				</sequence>
-				<attribute name="modifiable" type="boolean" use="optional" default="true" />
+				<attribute name="modifiable" type="sensinact:modifiable_enum" use="optional" />
 				<attribute name="hidden" type="boolean" use="optional" default="false" />
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="resourceInfoVariable" >
 		<complexContent>
 			<extension base="sensinact:resourceInfoData">
@@ -500,7 +509,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="resourceInfoProperty" >
 		<complexContent>
 			<extension base="sensinact:resourceInfoData">
@@ -508,7 +517,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="resourceInfoSensor" >
 		<complexContent>
 			<extension base="sensinact:resourceInfoData">
@@ -516,29 +525,29 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="resourceInfoAction" >
 		<complexContent>
 			<extension base="sensinact:resourceInfo">
-				<sequence>
+				<sequence>					
 					<element name="parameters" type="sensinact:actionResourceParameters" minOccurs="0" maxOccurs="unbounded">
 						<key name="uniqueActionParameterName">
 							<selector xpath="./sensinact:parameter"/>
 							<field xpath="@name"/>
 						</key>
-					</element>
+					</element>		
 				</sequence>
 				<attribute name="policy" type="sensinact:policy_enum" use="optional" fixed="ACTION"/>
 			</extension>
 		</complexContent>
 	</complexType>
-
+	
 	<complexType name="devices">
 		<annotation>
 			<documentation>Defines devices to reified before any discovering process</documentation>
 		</annotation>
 		<sequence>
-			<element name="device" type="sensinact:device" minOccurs="0" maxOccurs="unbounded">
+			<element name="device" type="sensinact:device" minOccurs="0" maxOccurs="unbounded">	
 				<unique name="uniqueServiceName">
 					<selector xpath="./sensinact:service"/>
 					<field xpath="@name"></field>
@@ -546,24 +555,24 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			</element>
 		</sequence>
 	</complexType>
-
+	
 	<attributeGroup name="anyAttributeGroup">
 		<anyAttribute/>
 	</attributeGroup>
-
+	
 	<attributeGroup name="deviceAttributeGroup">
     	<attribute name="identifier" type="string"/>
     	<attribute name="profile" type="string"/>
-		<attributeGroup ref="sensinact:anyAttributeGroup"/>
+		<attributeGroup ref="sensinact:anyAttributeGroup"/>		
 	</attributeGroup>
-
+	
 	<complexType name="device">
 		<sequence>
 			<element name="service" type="sensinact:service" minOccurs="0" maxOccurs="unbounded"/>
-		</sequence>
+		</sequence>	
 		<attributeGroup ref="sensinact:deviceAttributeGroup"/>
 	</complexType>
-
+	
 	<complexType name="service">
 		<attribute name="name" type="string"/>
 	</complexType>
@@ -578,7 +587,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 				</unique>
 			</element>
 			<element name="subscriptionModes" type="sensinact:subscriptionModes" minOccurs="0" maxOccurs="1"/>
-			<element name="resourceInfo" type="sensinact:resourceInfo" minOccurs="0" maxOccurs="unbounded">
+			<element name="resourceInfo" type="sensinact:resourceInfo" minOccurs="0" maxOccurs="unbounded">					
 				<unique name="uniqueResourceInfoAttribute">
 					<selector xpath="./sensinact:attribute"/>
 					<field xpath="@name"/>
@@ -600,7 +609,7 @@ elementFormDefault="qualified" attributeFormDefault="unqualified">
 			    	<field xpath="@name"/>
 			  	</keyref>
 			</element>
-			<element name="devices" type="sensinact:devices" minOccurs="0" maxOccurs="1">
+			<element name="devices" type="sensinact:devices" minOccurs="0" maxOccurs="1">			
 				<unique name="uniqueDeviceIdentifier">
 					<selector xpath="./sensinact:device"/>
 					<field xpath="@identifier"/>

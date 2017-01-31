@@ -15,6 +15,16 @@
             <value>Metres</value>
         </metadata>
     </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="latitude" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">latitude</identifier>
+        <type>float</type>
+    </resourceInfo>
+    <resourceInfo xsi:type="resourceInfoProperty" name="longitude" target="airpublicUncalibrated" modifiable="UPDATABLE">
+        <policy name="PROPERTY" update="AUTO" />
+        <identifier xsi:type="stringContent">longitude</identifier>
+        <type>float</type>
+    </resourceInfo>
     <resourceInfo xsi:type="resourceInfoProperty" name="co_a" target="airpublicUncalibrated" modifiable="UPDATABLE">
         <policy name="PROPERTY" update="AUTO" />
         <identifier xsi:type="stringContent">co_a</identifier>
@@ -135,6 +145,6 @@
   <resourceInfo xsi:type="resourceInfoProperty" name="id" target="airpublicUncalibrated" modifiable="UPDATABLE">
       <policy name="PROPERTY" update="AUTO" />
       <identifier xsi:type="stringContent">id</identifier>
-      <type>boolean</type>
+      <type>int</type>
   </resourceInfo>
 </resourceInfos>

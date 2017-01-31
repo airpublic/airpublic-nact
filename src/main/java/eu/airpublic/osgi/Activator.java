@@ -19,35 +19,39 @@ package eu.airpublic.osgi;
 
 import java.io.FileOutputStream;
 import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.servlet.ServletException;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.http.HttpContext;
+import org.osgi.service.http.HttpService;
+import org.osgi.service.http.NamespaceException;
+import org.osgi.util.tracker.ServiceTracker;
 
 import eu.airpublic.RawAirQualityProtocolStackConnector;
 import eu.airpublic.RawAirQualityReadingHttpRequestHandler;
-import eu.airpublic.RawAirQualityReadingPacket;
-import eu.airpublic.Server;
-import fr.cea.sna.gateway.core.model.Resource;
-import fr.cea.sna.gateway.generic.core.*;
-import fr.cea.sna.gateway.sthbnd.http.HttpPacket;
-import fr.cea.sna.gateway.sthbnd.http.HttpSnaProcessor;
-import fr.cea.sna.gateway.util.mediator.AbstractMediator;
-//import org.apache.felix.http.api.ExtHttpService;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
+import fr.cea.sna.gateway.generic.core.SnaResource;
+import fr.cea.sna.gateway.generic.core.SnaService;
+import fr.cea.sna.gateway.generic.core.SnaServiceProvider;
 import fr.cea.sna.gateway.sthbnd.http.HttpSnaManager;
-
 import fr.cea.sna.gateway.util.mediator.AbstractActivator;
-import org.osgi.service.http.HttpContext;
-import org.osgi.service.http.NamespaceException;
+import fr.cea.sna.gateway.util.mediator.AbstractMediator;
 
 /**
  * Bundle Activator
  */
 public class Activator extends AbstractActivator<AbstractMediator>
 {
-
-  //private HttpProtocolStackConnector connector = null;
-  private HttpSnaManager manager = null;
-  private RawAirQualityReadingHttpRequestHandler handler = null;
-  private Server<RawAirQualityReadingPacket> server = null;
+  private static final Logger LOG = Logger.getLogger(Activator.class.getCanonicalName());
+  private static final String ROOT = "/air-quality";
+  
+  private RawAirQualityProtocolStackConnector connector;  
+  private ServiceTracker<HttpService, HttpService> tracker = null;
 
     /**
 	 * @inheritDoc
@@ -57,23 +61,43 @@ public class Activator extends AbstractActivator<AbstractMediator>
 	@Override
 	public void doStart() throws Exception
 	{
-        RawAirQualityProtocolStackConnector connector = new RawAirQualityProtocolStackConnector(mediator);
+        this.tracker = new ServiceTracker<HttpService, HttpService>(
+        	super.mediator.getContext(), HttpService.class.getName(), 
+        		null)
+        {
+            /**
+             * @see ServiceTracker#addingService(org.osgi.framework.ServiceReference)
+             */
+            public HttpService addingService(ServiceReference<HttpService> serviceRef)
+            {
+            	HttpService httpService = super.addingService(serviceRef);
+                Activator.this.registerServlet(httpService);
+                LOG.info("Air Quality servlet registered on " + ROOT + " context");
+                return httpService;
+            }
 
-
-		manager = new HttpSnaManager(super.mediator,  "resource.xml", null);
+            /**
+             * @see ServiceTracker#removedService(org.osgi.framework.ServiceReference, java.lang.Object)
+             */
+            public void removedService(ServiceReference<HttpService> ref, 
+            		HttpService service)
+            {
+            	Activator.this.unregisterServlet(service);
+                super.removedService(ref, service);
+                LOG.info("Air Quality servlet unregistered");
+            }
+        };
+        this.tracker.open(true); 
+        
+        this.connector = new RawAirQualityProtocolStackConnector(mediator);        
+        HttpSnaManager manager = new HttpSnaManager(super.mediator, "resource.xml", null);		
 		manager.setServiceType(SnaService.class);
 		manager.setResourceType(SnaResource.class);
 		manager.setServiceProviderType(SnaServiceProvider.class);
 		manager.setStartAtInitializationTime(true);
-		manager.setUpdatePolicy(Resource.UpdatePolicy.AUTO);
-
-        SnaProcessor<HttpPacket> processor = manager.connect(connector);
-
-        handler = new RawAirQualityReadingHttpRequestHandler(mediator, processor);
-        server = new Server<RawAirQualityReadingPacket>(mediator, handler, processor);
-
-
-        server.start("127.0.0.1", 8789);
+		manager.setBuildDynamically(false);
+		connector.connect(manager);
+		
 	}
 
 	/**
@@ -85,27 +109,68 @@ public class Activator extends AbstractActivator<AbstractMediator>
 	@Override
 	public void doStop() throws Exception
 	{
-		if (this.server != null) {
-			this.server.stop();
+		this.connector.stop();
+		if(!this.tracker.isEmpty())
+		{
+			HttpService[] services = this.tracker.getServices(
+				new HttpService[0]);
+			int index = 0;
+			int length = services.length;
+			for(;index < length; index++)
+			{
+				unregisterServlet(services[index]);
+			}
 		}
-		this.server = null;
-		this.handler = null;
-		this.manager = null;
+		this.tracker.close();
+		
 	}
 
-	/**
-	 * @inheritDoc
-	 *
-	 * @see fr.cea.sna.gateway.util.mediator.AbstractActivator#
-	 * doInstantiate(org.osgi.framework.BundleContext, int, java.io.FileOutputStream)
-	 */
-	@Override
-	public AbstractMediator doInstantiate(BundleContext context, int logMode,
-										 FileOutputStream output) throws InvalidSyntaxException
-	{
-		return new AbstractMediator(context, logMode, output) {
-		    @Override
-            public void doDeactivate() {};
+    /**
+     * @inheritDoc
+     *
+     * @see fr.cea.sna.gateway.util.mediator.AbstractActivator#
+     * doInstantiate(org.osgi.framework.BundleContext, int, java.io.FileOutputStream)
+     */
+    public AbstractMediator doInstantiate(BundleContext context, int i, 
+    		FileOutputStream outputStream)
+            throws InvalidSyntaxException 
+    {
+        return new AbstractMediator(context, i, outputStream)
+        {
+			@Override
+            public void doDeactivate()
+            {
+				LOG.log(Level.CONFIG, "Mediator deactivated");
+            }
 		};
-  }
+    }
+
+	private void registerServlet(HttpService httpService) 
+    {       
+        Dictionary<String, String> initParams = new Hashtable<String, String>();
+        initParams.put("servlet-name", "AirQuality");
+
+        HttpContext context = httpService.createDefaultHttpContext();
+        
+		RawAirQualityReadingHttpRequestHandler handler = 
+			new RawAirQualityReadingHttpRequestHandler(mediator, connector);
+        try 
+        { 	
+            httpService.registerServlet(ROOT, handler, initParams,context);
+
+        } catch (ServletException e) {
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+        } catch (NamespaceException e) {
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    private void unregisterServlet(HttpService httpService) 
+    {
+        if (httpService != null)
+        {
+            httpService.unregister(ROOT);
+        }
+    }
+
 }
